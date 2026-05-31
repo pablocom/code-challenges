@@ -8,39 +8,42 @@
 use super::Link;
 
 pub fn reverse_k_group(head: Link, k: usize) -> Link {
-    if k <= 1 {
+    if k <= 1 || !has_at_least_k_nodes(&head, k) {
         return head;
     }
 
-    // Bail out (unchanged) if fewer than `k` nodes remain.
-    let mut probe = &head;
+    let mut reversed_group: Link = None;
+    let mut rest = head;
     for _ in 0..k {
-        match probe {
-            Some(node) => probe = &node.next,
-            None => return head,
+        let mut node = rest.unwrap();
+        rest = node.next.take();
+        node.next = reversed_group;
+        reversed_group = Some(node);
+    }
+
+    let group_tail = last_node_mut(&mut reversed_group);
+    group_tail.next = reverse_k_group(rest, k);
+
+    reversed_group
+}
+
+fn has_at_least_k_nodes(head: &Link, k: usize) -> bool {
+    let mut node = head;
+    for _ in 0..k {
+        match node {
+            Some(next) => node = &next.next,
+            None => return false,
         }
     }
+    true
+}
 
-    // Reverse the first `k` nodes.
-    let mut prev: Link = None;
-    let mut curr = head;
-    for _ in 0..k {
-        let mut node = curr.unwrap();
-        curr = node.next.take();
-        node.next = prev;
-        prev = Some(node);
-    }
-
-    // `prev` heads the reversed group; its tail is the original first node.
-    let reversed_rest = reverse_k_group(curr, k);
-
-    let mut tail = &mut prev;
+fn last_node_mut(group: &mut Link) -> &mut super::ListNode {
+    let mut tail = group;
     while tail.as_ref().unwrap().next.is_some() {
         tail = &mut tail.as_mut().unwrap().next;
     }
-    tail.as_mut().unwrap().next = reversed_rest;
-
-    prev
+    tail.as_mut().unwrap()
 }
 
 #[cfg(test)]

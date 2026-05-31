@@ -18,16 +18,17 @@ pub fn search(nums: &[i32], target: i32) -> i32 {
             return mid;
         }
 
-        if nums[left as usize] <= mid_value {
-            // Left half is sorted.
-            if nums[left as usize] <= target && target < mid_value {
+        let left_half_is_sorted = nums[left as usize] <= mid_value;
+        if left_half_is_sorted {
+            let target_in_left_half = nums[left as usize] <= target && target < mid_value;
+            if target_in_left_half {
                 right = mid - 1;
             } else {
                 left = mid + 1;
             }
         } else {
-            // Right half is sorted.
-            if mid_value < target && target <= nums[right as usize] {
+            let target_in_right_half = mid_value < target && target <= nums[right as usize];
+            if target_in_right_half {
                 left = mid + 1;
             } else {
                 right = mid - 1;

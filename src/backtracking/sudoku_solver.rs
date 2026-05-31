@@ -9,6 +9,9 @@
 
 const BLANK: char = '.';
 
+/// Bits 1..=9 set, matching the `1u16 << digit` encoding used for the masks.
+const ALL_DIGITS: u16 = 0x3FE;
+
 /// Bitmask + minimum-remaining-values backtracking.
 pub fn solve(board: &mut [Vec<char>]) {
     let mut row_masks = [0u16; 9];
@@ -56,40 +59,39 @@ fn backtrack(
         return true;
     }
 
-    // Pick the empty cell with the fewest candidates (MRV).
-    let mut best_idx = 0;
-    let mut min_options = 10;
-    let mut best_mask = 0u16;
+    let mut most_constrained_idx = 0;
+    let mut fewest_options = 10;
+    let mut candidates_at_best = 0u16;
     for i in 0..empty_count {
         let cell = empty_cells[i];
         let (r, c) = (cell / 9, cell % 9);
         let used = row_masks[r] | col_masks[c] | box_masks[box_index(r, c)];
-        let available = !used & 0x3FE; // bits 1..=9
-        let options = available.count_ones();
+        let candidates = !used & ALL_DIGITS;
+        let options = candidates.count_ones();
 
         if options == 0 {
             return false;
         }
-        if options >= min_options {
+        if options >= fewest_options {
             continue;
         }
-        min_options = options;
-        best_idx = i;
-        best_mask = available;
+        fewest_options = options;
+        most_constrained_idx = i;
+        candidates_at_best = candidates;
         if options == 1 {
             break;
         }
     }
 
-    let cell = empty_cells[best_idx];
+    let cell = empty_cells[most_constrained_idx];
     let (r, c) = (cell / 9, cell % 9);
     let b = box_index(r, c);
 
-    empty_cells.swap(best_idx, empty_count - 1);
+    empty_cells.swap(most_constrained_idx, empty_count - 1);
 
     for num in 1..=9u16 {
         let bit = 1u16 << num;
-        if best_mask & bit == 0 {
+        if candidates_at_best & bit == 0 {
             continue;
         }
 
@@ -115,7 +117,7 @@ fn backtrack(
         box_masks[b] &= !bit;
     }
 
-    empty_cells.swap(best_idx, empty_count - 1);
+    empty_cells.swap(most_constrained_idx, empty_count - 1);
     false
 }
 

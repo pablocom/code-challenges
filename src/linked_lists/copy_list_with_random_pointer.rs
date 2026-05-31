@@ -72,7 +72,12 @@ pub fn copy_random_list(head: &Option<NodeRef>) -> Option<NodeRef> {
 pub fn copy_random_list_interleaved(head: &Option<NodeRef>) -> Option<NodeRef> {
     head.as_ref()?;
 
-    // 1. Insert a copy after each original node.
+    weave_copies_after_originals(head);
+    link_copy_randoms_from_neighbours(head);
+    detach_copies_restoring_originals(head)
+}
+
+fn weave_copies_after_originals(head: &Option<NodeRef>) {
     let mut cursor = head.clone();
     while let Some(node) = cursor {
         let next = node.borrow().next.clone();
@@ -81,9 +86,9 @@ pub fn copy_random_list_interleaved(head: &Option<NodeRef>) -> Option<NodeRef> {
         node.borrow_mut().next = Some(copy);
         cursor = next;
     }
+}
 
-    // 2. A copy's random is the copy of the original's random, i.e. its
-    //    `random.next`.
+fn link_copy_randoms_from_neighbours(head: &Option<NodeRef>) {
     let mut cursor = head.clone();
     while let Some(node) = cursor {
         let copy = node.borrow().next.clone().unwrap();
@@ -93,8 +98,9 @@ pub fn copy_random_list_interleaved(head: &Option<NodeRef>) -> Option<NodeRef> {
         }
         cursor = copy.borrow().next.clone();
     }
+}
 
-    // 3. Detach the copies, restoring the originals' `next` pointers.
+fn detach_copies_restoring_originals(head: &Option<NodeRef>) -> Option<NodeRef> {
     let new_head = head.as_ref().unwrap().borrow().next.clone();
     let mut cursor = head.clone();
     while let Some(node) = cursor {
@@ -104,7 +110,6 @@ pub fn copy_random_list_interleaved(head: &Option<NodeRef>) -> Option<NodeRef> {
         copy.borrow_mut().next = next_original.as_ref().and_then(|n| n.borrow().next.clone());
         cursor = next_original;
     }
-
     new_head
 }
 

@@ -1,25 +1,29 @@
 //! Valid Mountain Array — strictly up to a single peak, then strictly down.
 
 pub fn solve(arr: &[i32]) -> bool {
-    let n = arr.len();
-    let mut i = 0;
-
-    // Climb.
-    while i + 1 < n && arr[i] < arr[i + 1] {
-        i += 1;
-    }
-
-    // The peak cannot be the first or last element.
-    if i == 0 || i == n - 1 {
+    if arr.len() < 3 {
         return false;
     }
+    let last = arr.len() - 1;
 
-    // Descend.
-    while i + 1 < n && arr[i] > arr[i + 1] {
+    let peak = ascend_from(arr, 0);
+    let is_interior_peak = peak != 0 && peak != last;
+
+    is_interior_peak && descend_from(arr, peak) == last
+}
+
+fn ascend_from(arr: &[i32], mut i: usize) -> usize {
+    while i + 1 < arr.len() && arr[i] < arr[i + 1] {
         i += 1;
     }
+    i
+}
 
-    i == n - 1
+fn descend_from(arr: &[i32], mut i: usize) -> usize {
+    while i + 1 < arr.len() && arr[i] > arr[i + 1] {
+        i += 1;
+    }
+    i
 }
 
 #[cfg(test)]

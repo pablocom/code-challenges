@@ -1,13 +1,16 @@
 //! Maximum Area of Island — the largest connected group of `1`s (4-directional)
 //! in a binary grid. Flood-fill from each land cell, marking cells visited.
 
+const LAND: i32 = 1;
+const VISITED: i32 = -1;
+
 pub fn solve(grid: &[Vec<i32>]) -> i32 {
     let mut grid: Vec<Vec<i32>> = grid.to_vec();
     let mut max_area = 0;
 
     for i in 0..grid.len() {
         for j in 0..grid[i].len() {
-            if grid[i][j] == 1 {
+            if grid[i][j] == LAND {
                 max_area = max_area.max(flood_fill(&mut grid, i as isize, j as isize));
             }
         }
@@ -21,11 +24,11 @@ fn flood_fill(grid: &mut [Vec<i32>], i: isize, j: isize) -> i32 {
         return 0;
     }
     let (row, col) = (i as usize, j as usize);
-    if j < 0 || j >= grid[row].len() as isize || grid[row][col] != 1 {
+    if j < 0 || j >= grid[row].len() as isize || grid[row][col] != LAND {
         return 0;
     }
 
-    grid[row][col] = -1; // mark visited
+    grid[row][col] = VISITED;
 
     1 + flood_fill(grid, i + 1, j)
         + flood_fill(grid, i - 1, j)
