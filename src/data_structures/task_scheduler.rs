@@ -29,11 +29,11 @@ pub fn solve(tasks: &[char], n: i32) -> i32 {
             }
         }
 
-        if let Some(&(remaining, ready_at)) = cooling.front() {
-            if ready_at == time {
-                cooling.pop_front();
-                ready.insert(remaining);
-            }
+        if let Some(&(remaining, ready_at)) = cooling.front()
+            && ready_at == time
+        {
+            cooling.pop_front();
+            ready.insert(remaining);
         }
     }
 

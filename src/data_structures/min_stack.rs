@@ -24,10 +24,10 @@ impl MinStack {
     }
 
     pub fn pop(&mut self) {
-        if let Some(value) = self.stack.pop() {
-            if self.minimums.last() == Some(&value) {
-                self.minimums.pop();
-            }
+        if let Some(value) = self.stack.pop()
+            && self.minimums.last() == Some(&value)
+        {
+            self.minimums.pop();
         }
     }
 
