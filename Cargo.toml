@@ -1,0 +1,16 @@
+[package]
+name = "code_challenges"
+version = "0.1.0"
+edition = "2024"
+description = "A collection of algorithm and data-structure solutions in idiomatic Rust, with inline unit tests."
+license = "MIT"
+publish = false
+
+[dependencies]
+
+[dev-dependencies]
+
+[lints.clippy]
+# These problems intentionally re-implement standard algorithms for practice,
+# so a few pedantic lints are noise rather than signal.
+needless_range_loop = "allow"
