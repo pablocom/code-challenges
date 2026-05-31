@@ -34,10 +34,7 @@ mod tests {
         let words = [
             "the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is",
         ];
-        assert_eq!(
-            top_k_frequent(&words, 4),
-            vec!["the", "is", "sunny", "day"]
-        );
+        assert_eq!(top_k_frequent(&words, 4), vec!["the", "is", "sunny", "day"]);
     }
 
     #[test]

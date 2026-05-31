@@ -13,7 +13,10 @@ pub fn solve(nums: &[i32], k: i32) -> i32 {
 
     for &n in nums {
         running_sum += n;
-        result += count_by_prefix.get(&(running_sum - k)).copied().unwrap_or(0);
+        result += count_by_prefix
+            .get(&(running_sum - k))
+            .copied()
+            .unwrap_or(0);
         *count_by_prefix.entry(running_sum).or_insert(0) += 1;
     }
 

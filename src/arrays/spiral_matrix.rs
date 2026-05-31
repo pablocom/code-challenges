@@ -51,10 +51,7 @@ mod tests {
 
     #[test]
     fn size_three() {
-        assert_eq!(
-            solve(3),
-            vec![vec![1, 2, 3], vec![8, 9, 4], vec![7, 6, 5]]
-        );
+        assert_eq!(solve(3), vec![vec![1, 2, 3], vec![8, 9, 4], vec![7, 6, 5]]);
     }
 
     #[test]

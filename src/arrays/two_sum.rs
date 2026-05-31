@@ -72,7 +72,9 @@ impl TwoSumStrategy for ReadHeavyTwoSum {
     fn add(&mut self, number: i32) {
         let next_index = self.numbers.len();
         for (i, &existing) in self.numbers.iter().enumerate() {
-            self.pair_by_sum.entry(existing + number).or_insert([i, next_index]);
+            self.pair_by_sum
+                .entry(existing + number)
+                .or_insert([i, next_index]);
         }
         self.numbers.push(number);
     }

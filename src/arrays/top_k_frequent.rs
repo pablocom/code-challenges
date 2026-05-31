@@ -12,8 +12,10 @@ pub fn solve(nums: &[i32], k: usize) -> Vec<i32> {
     }
 
     // Ordered by frequency first; the number breaks ties deterministically.
-    let mut heap: BinaryHeap<(i32, i32)> =
-        counts.into_iter().map(|(num, count)| (count, num)).collect();
+    let mut heap: BinaryHeap<(i32, i32)> = counts
+        .into_iter()
+        .map(|(num, count)| (count, num))
+        .collect();
 
     let mut result = Vec::with_capacity(k);
     for _ in 0..k {

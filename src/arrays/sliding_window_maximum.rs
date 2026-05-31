@@ -35,7 +35,10 @@ mod tests {
 
     #[test]
     fn examples() {
-        assert_eq!(solve(&[1, 3, -1, -3, 5, 3, 6, 7], 3), vec![3, 3, 5, 5, 6, 7]);
+        assert_eq!(
+            solve(&[1, 3, -1, -3, 5, 3, 6, 7], 3),
+            vec![3, 3, 5, 5, 6, 7]
+        );
         assert_eq!(solve(&[1, 2, 3], 3), vec![3]);
         assert_eq!(solve(&[1, -1, 3], 1), vec![1, -1, 3]);
         assert_eq!(solve(&[5, 5, 5, 5], 2), vec![5, 5, 5]);
