@@ -15,7 +15,6 @@
 //!   builders) live at the top of their category module.
 
 pub mod arrays;
-pub mod assessments;
 pub mod backtracking;
 pub mod binary_trees;
 pub mod concurrency;

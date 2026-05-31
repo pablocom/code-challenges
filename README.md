@@ -1,6 +1,6 @@
 # code-challenges (Rust edition)
 
-A collection of **119 algorithm and data-structure solutions** in idiomatic
+A collection of **114 algorithm and data-structure solutions** in idiomatic
 Rust, organized by category, each with unit tests living right beside the
 implementation. This is a Rust port of a long-running C#/.NET practice
 repository — same problems, re-expressed the Rust way.
@@ -19,10 +19,9 @@ repository — same problems, re-expressed the Rust way.
 | Mathematics | 7 |
 | DataStructures | 5 |
 | Searching | 5 |
-| Assessments | 5 |
 | Concurrency | 1 |
 
-268 tests, all passing.
+260 tests, all passing.
 
 ## Prerequisites
 
