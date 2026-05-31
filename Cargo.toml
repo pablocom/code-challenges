@@ -9,6 +9,11 @@ publish = false
 [dependencies]
 
 [dev-dependencies]
+criterion = { version = "0.8.2", default-features = false, features = ["cargo_bench_support"] }
+
+[[bench]]
+name = "algorithms"
+harness = false
 
 [lints.clippy]
 # These problems intentionally re-implement standard algorithms for practice,
