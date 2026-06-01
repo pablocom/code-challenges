@@ -1,9 +1,7 @@
 # code-challenges
 
-A collection of **114 algorithm and data-structure solutions** in idiomatic
-Rust, organized by category, each with unit tests living right beside the
-implementation. This is a Rust port of a long-running C#/.NET practice
-repository — same problems, re-expressed the Rust way.
+A collection of **algorithm and data-structure solutions** organized by category, 
+each with unit tests living right beside the implementation. 
 
 ## Prerequisites
 
